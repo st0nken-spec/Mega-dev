@@ -1,0 +1,22 @@
+services:
+  web:
+    build:
+      context: .
+    image: mega-dev:${MEGA_DEV_TAG:-preview}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${MEGA_DEV_PORT:-8080}:8080"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /config:size=8m
+      - /data:size=8m
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
