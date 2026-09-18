@@ -1,0 +1,12 @@
+:8080 {
+  root * /srv
+  encode zstd gzip
+  header {
+    X-Content-Type-Options nosniff
+    Referrer-Policy no-referrer
+    -Server
+  }
+  respond /healthz 200
+  try_files {path} /index.html
+  file_server
+}
