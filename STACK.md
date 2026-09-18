@@ -1,42 +1,48 @@
 # Proposed stack
 
-**Status:** proposed pending product definition
+**Status:** proposed; PWA-first versus native is an open ADR
 
-## Recommendation
+## Recommendation for this product
 
-- **Client:** Expo + React Native + Expo Router for iOS, Android and web.
-- **Backend:** self-hosted Supabase for PostgreSQL, authentication, storage and realtime needs.
-- **Workspace:** pnpm workspaces. Add Turborepo only when a second app/package makes task caching useful.
-- **Validation/data access:** Zod at boundaries and generated Supabase database types. Start with Supabase's client and SQL migrations rather than adding an ORM.
-- **Testing:** Vitest for units, React Native Testing Library for UI, and Playwright for a few critical web flows.
-- **Hosting:** Docker Compose on one Linux host; Caddy for local TLS/reverse proxy; Tailscale for private access.
-- **Automation:** GitHub Actions runs the same `make check` gate as local development. Keep deployment manual until the first environment is stable.
+Start with a **responsive, installable PWA** using the existing React + TypeScript + Vite scaffold. Add:
 
-## Why this default
+- React Router for hub/game routes;
+- a web app manifest and service worker for installation and cached app assets;
+- SVG for scalable game/coloring assets;
+- Canvas + Pointer Events for drawing, touch and stylus input;
+- Web Audio / speech only after testing on the actual family devices;
+- self-hosted Supabase/PostgreSQL for parent accounts, child profiles, content and progress;
+- Zod at boundaries and generated Supabase database types;
+- Vitest and Playwright for critical touch/web flows;
+- Docker Compose + Caddy on the always-on home machine;
+- private family access with Tailscale and no public endpoint.
 
-Expo Router uses one routing model across native and web while retaining access to native phone capabilities. Expo officially supports pnpm monorepos. PostgreSQL keeps the data portable; Supabase packages common backend needs without separate services on day one. Tailscale avoids exposing the private backend to the public internet.
+## Why PWA-first
 
-Use a modular monolith. Do not add microservices, Kubernetes, GraphQL, a message bus or a second database until measured needs justify them.
+The first hubs are 2D games, touch drawing, coloring and forms. Standard browser APIs cover these well, and one web build runs on phones, tablets and computers without app-store accounts or review. A PWA can be installed to a phone home screen; iOS requires a manual Add to Home Screen step. Tailscale already provides the private distribution boundary.
 
-## Intended shape after product discovery
+This gets the first child-tested game into use fastest and keeps the existing smoke-test scaffold useful.
+
+## Open ADR: stay PWA or add native
+
+Do not close the native option. Re-evaluate after the first vertical slice on real devices.
+
+Choose **Expo/React Native** later if testing shows a material need for stronger offline/background behavior, richer local notifications, app-store delivery, deep native APIs, or browser performance that cannot meet the drawing/game target. If native is added, keep domain logic and content schemas in shared TypeScript packages rather than forcing all UI to be shared.
+
+## Backend and repository shape
+
+Use a modular monolith and pnpm workspaces only when the second package appears:
 
 ```text
-apps/app/         # Expo Router: iOS, Android and web
-packages/domain/  # platform-neutral business rules and types
-packages/ui/      # shared UI where sharing is honest
-supabase/         # migrations and seed data
-infra/            # Compose and Caddy configuration
+apps/web/          # installable PWA
+packages/domain/   # game rules, learning content types and progress logic
+packages/content/  # curated question/activity packs
+supabase/          # migrations, row-level policies and seed data
+infra/             # Compose and Caddy configuration
 ```
 
-The Vite scaffold remains untouched until the product idea is known. Replace it with `apps/app`, or keep a separate web app only if public SEO or different desktop UX requires it.
+Add Turborepo only when multiple apps/packages make task caching useful. Avoid microservices, Kubernetes, GraphQL, a message bus and a second database until evidence requires them.
 
-## Decision gates
+## Child-data boundary
 
-Revisit this choice for public search-indexed content, heavy background jobs, offline-first collaboration, unusual native APIs, public access without Tailscale, or app-store distribution.
-
-## Assumptions to validate
-
-1. The first product is a private family app, not a marketplace or public content site.
-2. One household-sized server and PostgreSQL are sufficient initially.
-3. Family members can install Tailscale and the app, or use its web build.
-4. Native phone capabilities will matter eventually, not only a home-screen PWA.
+Separate parent identity, household membership, child profiles, activity content, attempts and artwork. Test row-level policies for every household-owned table. Keep generated homework parent-reviewed. Do not send child data to external AI services without a later explicit privacy decision.
