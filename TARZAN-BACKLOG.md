@@ -39,3 +39,38 @@ Research/prototype after M1's matching-game skeleton. A one-level input/performa
 - GameSpot 1999 review describing Stampede and Sabor Attacks: https://www.gamespot.com/reviews/tarzan-review/1900-2546076/
 - IGN 1999 review describing side-scrolling, coins and running/jumping: https://www.ign.com/articles/1999/08/14/tarzan-action-game
 - PSX Data Center overview: https://psxdatacenter.com/games/P/D/SCES-01431.html
+
+# Backlog research: hero training platformer
+
+## Identification
+
+Ivan's memory closely matches **Disney's Hercules / Hercules Action Game (1997)** by Eurocom for PlayStation and Windows. It is a 2D side-scrolling action platformer with pseudo-3D foreground/background lanes plus over-the-shoulder running stages. Hercules runs, jumps, grabs ledges, swings on poles, fights, and collects coins, action figures, sword upgrades and hidden password vases.
+
+## Original feel to preserve safely
+
+- fast run-and-jump movement with short, varied stages;
+- satisfying item trails and hidden routes;
+- occasional foreground/background lane changes;
+- simple environmental interactions and readable boss patterns;
+- over-the-shoulder obstacle runs as a pacing change.
+
+Mega-dev must use original characters, art, audio, names and level designs. Build an original **Hero Training** game: a child hero crosses a myth-inspired obstacle course, collects stars/runes, solves brief choices through movement, and faces friendly pattern-based trials.
+
+Natural learning angles:
+
+- number sequences and sums determine the correct item trail;
+- Swedish/English word parts sit on alternate lanes;
+- shapes, categories and general-knowledge symbols hide on optional routes;
+- level-end hero badges show effort and skill, not failure or lost lives;
+- pure-fun mode remains available.
+
+## Roadmap placement
+
+Prototype one short stage after M1. Consider it for M3 alongside Jungle Run once shared controls, profile/progress data and curriculum-tagged content packs are stable.
+
+## Sources
+
+- MobyGames overview and mechanics: https://www.mobygames.com/game/4284/disneys-hercules/
+- GameSpot 1997 review of side-scrolling, pseudo-3D lanes and running sequence: https://www.gamespot.com/reviews/hercules-action-game-review/1900-2547881/
+- Gamebits review of standard side-scrolling and over-the-shoulder running: https://www.gamebits.net/psx/hercules/
+- Independent retrospective on stages and bosses: https://classic-games.net/playstation/disneys-hercules/
