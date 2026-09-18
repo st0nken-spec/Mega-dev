@@ -74,3 +74,15 @@ Prototype one short stage after M1. Consider it for M3 alongside Jungle Run once
 - GameSpot 1997 review of side-scrolling, pseudo-3D lanes and running sequence: https://www.gamespot.com/reviews/hercules-action-game-review/1900-2547881/
 - Gamebits review of standard side-scrolling and over-the-shoulder running: https://www.gamebits.net/psx/hercules/
 - Independent retrospective on stages and bosses: https://classic-games.net/playstation/disneys-hercules/
+
+# More revival candidates - not committed scope
+
+These are options for Ivan to pick from after the first shared game system works:
+
+- **Crate Dash** - a Crash Bandicoot-style toward-camera runner with dodging and crate smashing; trains reaction/timing and counting or grouping crates.
+- **Ring Rush** - a Sonic-style speed platformer with ring trails; practices counting and quick arithmetic from collected-ring totals.
+- **Market Rooftops** - an Aladdin-style 1993 platformer with gem routes; basic addition/subtraction and value comparison.
+- **Letter Glider** - Rayman-style floating and precision jumps; collect letters in order to spell Swedish or English words.
+- **Animal Kingdom Trails** - Jungle Book / Lion King 1994-style nature levels; animal facts, habitats and general nature knowledge.
+
+These describe broad gameplay patterns only. Use original characters, worlds, art, audio and level designs.
