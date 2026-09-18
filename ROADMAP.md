@@ -1,23 +1,34 @@
 # Foundation roadmap
 
-Dates stay unset until the product idea and available build time are known.
+## M0 - Product brief and device decisions
 
-## M0 - Product brief and constraints
+Exit when:
+- the family learning-hub brief in `PRODUCT.md` is accepted;
+- the first child, learning goal and game are chosen;
+- target family phone/tablet/browser devices are listed;
+- child-data retention and parent controls are agreed;
+- PWA-first versus immediate Expo/native is decided in an ADR.
 
-Exit when the primary user/problem, top three jobs, non-goals, data sensitivity, offline needs and one demonstrable end-to-end scenario are written. Accept, change or reject the proposed stack.
+## M1 - Play hub walking skeleton
 
-## M1 - Walking skeleton
-
-Exit when one Expo route runs on a phone development build and web; one test user creates and reads one domain record; local and CI checks pass; no production or family data is used.
+Build one child profile, one parent-selected learning track and one touch-friendly matching game. Exit when it runs as an installable PWA on Ivan's phone and one family device, works in a desktop browser, stores one progress record and passes local/CI checks with no real child data.
 
 ## M2 - Self-hosted private alpha
 
-Exit when the backend and web build run from versioned Compose configuration; secrets stay outside git; Tailscale HTTPS works; backups exist; one restore is proven; health, upgrade and rollback steps are documented.
+Run the PWA and Supabase/PostgreSQL from versioned Docker Compose on Ivan's always-on home machine. Exit when Tailscale HTTPS works away from home Wi-Fi, family access is narrow, backups exist, one restore is proven, and deploy/rollback/lost-device steps are documented.
 
-## M3 - Family pilot
+## M3 - Useful play hub
 
-Exit when Ivan and one invited family tester sign in from separate devices; household/member authorization works; one complete product job works on phone and web; feedback has a path; lost-device access revocation is tested.
+Add Snake and tic-tac-toe learning modes plus curated math, Swedish, English and general-knowledge packs. Exit when games remain fun in child testing, difficulty is parent-adjustable, spoken/visual prompts meet the chosen age level, and progress collection is minimal and useful.
 
-## M4 - Dependable home release
+## M4 - Create hub
 
-Exit when the core flow works without developer intervention; monitoring and recovery meet the agreed target; accessibility and platform behavior are checked; the distribution choice is documented; the next milestone is based on usage.
+Add coloring pages, free drawing and contour tracing. Exit when touch/stylus drawing performs well on target devices, artwork storage/export follows the parent's choice, and child work remains private to the household.
+
+## M5 - Homework hub
+
+Add parent-configured practice generation. Start with templates and curated content; gate any AI generation behind parent review and a child-data privacy decision. Exit when generated work is age-appropriate, editable, printable/on-screen and never shown to a child before parent approval.
+
+## M6 - Dependable family release
+
+Exit when core play/create flows work without developer intervention, accessibility and recovery meet the agreed target, lost-device revocation is tested, and the PWA/native decision is revisited from real usage.
