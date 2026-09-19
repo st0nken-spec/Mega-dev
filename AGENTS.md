@@ -16,3 +16,7 @@ make build   # production build
 - Components in src/components, one per file, named exports
 - No `any`. If types fight you, say so instead of casting.
 - Small commits, present tense messages
+
+## Specs
+Features start as a spec in `specs/`, written against `specs/TEMPLATE.md`.
+Whoever picks up a spec implements it on a branch.
