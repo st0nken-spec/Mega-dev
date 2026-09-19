@@ -71,9 +71,9 @@ export default function App(){
     content=<ActivityFrame backLabel="Hem" breadcrumb="Läxa" onBack={goHome}><HomeworkHub/></ActivityFrame>
   }
 
-  return <main>
+  return <><a className="skip-link" href="#main-content">Hoppa till innehållet</a><main id="main-content" tabIndex={-1}>
     <header><div><p className="eyebrow">MEGA-DEV</p><h1>Familjens lärhub</h1></div><span className="private">● Privat hemma</span></header>
     <ProfileBar profiles={profiles} activeId={activeId} onSelect={setActiveId} onReset={reset}/>
     {content}
-  </main>
+  </main></>
 }
