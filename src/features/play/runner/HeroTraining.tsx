@@ -10,6 +10,7 @@ import './runner.css'
 const stageLength = (difficulty: Difficulty) => difficulty === 1 ? 14 : 18
 const chaseTick = (difficulty: Difficulty) => difficulty === 1 ? TICK_MS + 60 : TICK_MS - 60
 const GATE_TICK_MS = 800
+const telegraphTicks = (difficulty: Difficulty) => difficulty === 1 ? 4 : 3
 const WIN_MESSAGE = 'Porten är öppen! Du klarade hela hjältebanan.'
 
 export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { difficulty: Difficulty; onDifficultyChange: (value: Difficulty) => void; onWin: () => void }) {
@@ -19,7 +20,7 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
   const [step, setStep] = useState(0)
   const [question, setQuestion] = useState<Question>(() => makeQuestion('math', difficulty))
   const [run, setRun] = useState<RunState>(createRun)
-  const [gate, setGate] = useState<GateState>(createGate)
+  const [gate, setGate] = useState<GateState>(() => createGate(telegraphTicks(difficulty)))
   const [blocking, setBlocking] = useState(false)
   const [won, setWon] = useState(false)
   const [message, setMessage] = useState<string>(heroStages[0].description)
@@ -34,7 +35,7 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
     setStep(0)
     setQuestion(makeQuestion(nextTrack, nextDifficulty))
     setRun(createRun())
-    setGate(createGate())
+    setGate(createGate(telegraphTicks(nextDifficulty)))
     setBlocking(false)
     setWon(false)
     setMessage(heroStages[0].description)
@@ -46,7 +47,7 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
     setStage(next)
     setStep(0)
     setRun(createRun())
-    setGate(createGate())
+    setGate(createGate(telegraphTicks(difficulty)))
     setBlocking(false)
     setMessage(heroStages[next].description)
   }
@@ -81,6 +82,25 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
       }
     }, GATE_TICK_MS)
     return () => clearInterval(timer)
+  })
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (won) return
+      if (stage === 0) {
+        if (event.key === ' ' || event.key === 'ArrowUp') { event.preventDefault(); courseMove('jump') }
+        if (event.key === 'ArrowDown') { event.preventDefault(); courseMove('duck') }
+      } else if (stage === 1) {
+        if (event.key === 'ArrowLeft') { event.preventDefault(); move(run.lane > 0 ? (run.lane - 1) as Lane : 0) }
+        if (event.key === 'ArrowRight') { event.preventDefault(); move(run.lane < 2 ? (run.lane + 1) as Lane : 2) }
+        if (event.key === ' ' || event.key === 'ArrowUp') { event.preventDefault(); move(undefined, 'jump') }
+        if (event.key === 'ArrowDown') { event.preventDefault(); move(undefined, 'duck') }
+      } else if (stage === 2) {
+        if (event.key === ' ' || event.key === 'Enter' || event.key === 'ArrowDown') { event.preventDefault(); setBlocking(true) }
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   })
 
   const courseMove = (kind: 'jump' | 'duck') => {
