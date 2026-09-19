@@ -3,7 +3,7 @@
 ## M0 - Product brief and device decisions
 
 Exit when:
-- the family learning-hub brief in `PRODUCT.md` is accepted;
+- the family learning-hub brief in `PRODUCT-BRIEF.md` is accepted;
 - the first child, learning goal and game are chosen;
 - target family phone/tablet/browser devices are listed;
 - child-data retention and parent controls are agreed;

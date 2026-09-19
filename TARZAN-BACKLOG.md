@@ -29,6 +29,10 @@ Learning should fit movement rather than pause it:
 
 Use generous checkpoints, visual attack tells, adjustable speed and no lost lives. Parent-selected difficulty can scale from symbols/counting through Swedish/English vocabulary and general knowledge.
 
+## Status
+
+Shipped as **Djungellöpet** in the Play hub (three stages: treetop course, forced chase, pattern-based guardian boss), ahead of the placement suggested below. See `specs/jungle-hero-runners.md`.
+
 ## Roadmap placement
 
 Research/prototype after M1's matching-game skeleton. A one-level input/performance spike can enter M3, but the polished runner and boss should remain backlog until the shared profile, content and progress systems are stable.
@@ -63,6 +67,10 @@ Natural learning angles:
 - shapes, categories and general-knowledge symbols hide on optional routes;
 - level-end hero badges show effort and skill, not failure or lost lives;
 - pure-fun mode remains available.
+
+## Status
+
+Shipped as **Hjältebanan** in the Play hub (training course, runner's-path chase, gate-keeper trial), ahead of the placement suggested below. See `specs/jungle-hero-runners.md`.
 
 ## Roadmap placement
 
