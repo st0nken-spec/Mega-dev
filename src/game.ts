@@ -47,3 +47,4 @@ export const matchCards = (deck:Card[],ids:string[]) => {
   return {matched:true,deck:deck.map(card=>ids.includes(card.id)?{...card,matched:true}:card)}
 }
 export const awardStar = (profiles:Profile[],activeId:string) => profiles.map(profile=>profile.id===activeId?{...profile,stars:profile.stars+1}:profile)
+export const resetStars = (profiles:Profile[],id:string) => profiles.map(profile=>profile.id===id?{...profile,stars:0}:profile)
