@@ -53,3 +53,15 @@ describe('guardian boss', () => {
     expect(next.hits).toBe(1)
   })
 })
+
+describe('createGuardian telegraph window', () => {
+  it('uses a custom telegraph window for gentler levels', () => {
+    expect(createGuardian(() => 0.9, 4).ticksLeft).toBe(4)
+  })
+
+  it('restores the custom window after a blocked hit', () => {
+    const ready = { ...createGuardian(() => 0.9, 4), attack: { kind: 'duck' } as const, phase: 'shield' as const }
+    const { state } = landHit(ready, () => 0.1)
+    expect(state.ticksLeft).toBe(4)
+  })
+})
