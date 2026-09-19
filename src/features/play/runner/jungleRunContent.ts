@@ -1,0 +1,1 @@
+export const jungleStages=[{name:'Trädkronorna',description:'Lär dig banan och samla tre kunskapsfrön.'},{name:'Flykten',description:'Spring genom djungeln och ta dig förbi hindren.'},{name:'Vaktkatten',description:'Läs signalen, ducka eller byt spår och öppna skölden.'}] as const
