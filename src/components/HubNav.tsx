@@ -1,0 +1,1 @@
+export function HubNav(){return <nav><article><span className="nav-icon">S</span><b>Spela</b><small>Fyra ämnen är igång</small></article><article><span className="nav-icon">K</span><b>Skapa</b><small>Kommer senare</small></article><article><span className="nav-icon">L</span><b>Läxa</b><small>Kommer senare</small></article></nav>}
