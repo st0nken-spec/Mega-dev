@@ -1,2 +1,0 @@
-import type { Profile } from '../game'
-export function ProfilePicker({profiles,activeId,onSelect}:{profiles:Profile[];activeId:string;onSelect:(id:string)=>void}){return <section className="profiles" aria-label="Välj profil">{profiles.map(p=><button className={p.id===activeId?'profile active':'profile'} onClick={()=>onSelect(p.id)} key={p.id}><span>{p.id.endsWith('1')?'R':'B'}</span><b>{p.name}</b><small>{p.stars} stjärnor</small></button>)}</section>}
