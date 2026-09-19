@@ -14,7 +14,6 @@ import { TicTacToe } from './features/play/TicTacToe'
 import { SnakeGame } from './features/play/SnakeGame'
 import { HomeworkHub } from './features/homework/HomeworkHub'
 import { JungleRun } from './features/play/runner/JungleRun'
-import './features/play/runner/runner.css'
 
 export type Hub = 'play' | 'create' | 'homework'
 type PlayActivity = 'matching' | 'tictactoe' | 'snake' | 'jungleRun'
