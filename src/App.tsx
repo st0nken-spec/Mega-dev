@@ -13,9 +13,10 @@ import { MatchingGame } from './features/matching/MatchingGame'
 import { TicTacToe } from './features/play/TicTacToe'
 import { SnakeGame } from './features/play/SnakeGame'
 import { HomeworkHub } from './features/homework/HomeworkHub'
+import { JungleRun } from './features/play/runner/JungleRun'
 
 export type Hub = 'play' | 'create' | 'homework'
-type PlayActivity = 'matching' | 'tictactoe' | 'snake'
+type PlayActivity = 'matching' | 'tictactoe' | 'snake' | 'jungleRun'
 type CreateActivity = 'color' | 'draw' | 'trace'
 type Screen =
   | { kind: 'home' }
@@ -28,13 +29,14 @@ const playItems: HubPickerItem[] = [
   { id: 'matching', icon: 'P', name: 'Parjakten', description: 'Matcha par i fyra ämnen' },
   { id: 'tictactoe', icon: 'T', name: 'Tre i rad', description: 'Svara rätt för att ta en ruta' },
   { id: 'snake', icon: 'S', name: 'Siffersnok', description: 'Ät rätt siffra med ormen' },
+  { id: 'jungleRun', icon: 'D', name: 'Djungellöpet', description: 'Tre banor med hopp, flykt och vaktkatt' },
 ]
 const createItems: HubPickerItem[] = [
   { id: 'color', icon: 'F', name: 'Färglägg', description: 'Tryck och fyll med färg' },
   { id: 'draw', icon: 'R', name: 'Rita fritt', description: 'Skapa precis vad du vill' },
   { id: 'trace', icon: 'S', name: 'Spåra', description: 'Följ former, bokstäver och siffror' },
 ]
-const playNames: Record<PlayActivity,string> = { matching:'Parjakten', tictactoe:'Tre i rad', snake:'Siffersnok' }
+const playNames: Record<PlayActivity,string> = { matching:'Parjakten', tictactoe:'Tre i rad', snake:'Siffersnok', jungleRun:'Djungellöpet' }
 const createNames: Record<CreateActivity,string> = { color:'Färglägg', draw:'Rita fritt', trace:'Spåra' }
 
 export default function App(){
@@ -62,7 +64,7 @@ export default function App(){
       content=<Home onSelect={goHub}/>
     }
   } else if(screen.hub==='play'){
-    const game=screen.activity==='matching'?<MatchingGame difficulty={difficulty} onDifficultyChange={setDifficulty} onMatch={award}/>:screen.activity==='tictactoe'?<TicTacToe difficulty={difficulty} onDifficultyChange={setDifficulty} onWin={award}/>:<SnakeGame key={difficulty} difficulty={difficulty} onDifficultyChange={setDifficulty}/>
+    const game=screen.activity==='matching'?<MatchingGame difficulty={difficulty} onDifficultyChange={setDifficulty} onMatch={award}/>:screen.activity==='tictactoe'?<TicTacToe difficulty={difficulty} onDifficultyChange={setDifficulty} onWin={award}/>:screen.activity==='snake'?<SnakeGame key={difficulty} difficulty={difficulty} onDifficultyChange={setDifficulty}/>:<JungleRun difficulty={difficulty} onDifficultyChange={setDifficulty} onWin={award}/>
     content=<ActivityFrame backLabel="Spela" breadcrumb={playNames[screen.activity]} onBack={()=>goHub('play')}>{game}</ActivityFrame>
   } else if(screen.hub==='create'){
     const studio=screen.activity==='color'?<ColoringStudio/>:<DrawingStudio trace={screen.activity==='trace'}/>

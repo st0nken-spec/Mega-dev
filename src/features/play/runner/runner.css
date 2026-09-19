@@ -1,0 +1,35 @@
+.runner-panel{display:grid;gap:12px}
+.runner-hero{background:#174f42;color:#fff;border-radius:28px;padding:24px;display:flex;justify-content:space-between;gap:16px}
+.runner-hero h2{font-size:2rem}
+.runner-actions{display:grid;gap:8px;align-content:start}
+.stage-dots{display:flex;justify-content:center;gap:8px}
+.stage-dots span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#dff3e8;font-weight:900}
+.stage-dots .active{background:#174f42;color:#fff}
+.runner-banner{margin:0;padding:12px 16px;border-radius:16px;background:#ffd36a;color:#17322b;font-weight:900;text-align:center}
+.runner-track{display:grid;gap:8px}
+.runner-track .lane{position:relative;display:block;width:100%;min-height:64px;border:3px solid transparent;border-radius:16px;background:#dff3e8;text-align:left;overflow:hidden}
+.runner-track .lane[aria-pressed=true]{border-color:#174f42;background:#effaf4}
+.runner-player{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:1.6rem}
+.obstacle{position:absolute;top:50%;transform:translate(-50%,-50%);padding:4px 8px;border-radius:10px;background:#f2a65a;color:#fff;font-weight:900;font-size:.85rem;white-space:pre-line;text-align:center;max-width:30%}
+.obstacle.duck{background:#e36b3d}
+.obstacle.question{background:#27614f;font-size:1rem}
+.runner-controls,.runner-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.runner-controls button,.runner-options button,.runner-next{border:0;border-radius:14px;background:#ffd36a;color:#17322b;font-weight:900;padding:14px}
+.runner-controls button[aria-pressed=true]{background:#174f42;color:#fff}
+.runner-question{display:grid;gap:12px;padding:20px;border-radius:22px;background:#dff3e8;text-align:center}
+.runner-question p{font-size:1.2rem;font-weight:900}
+.runner-quiz{font-size:1.6rem}
+.runner-options{grid-template-columns:repeat(3,1fr)}
+.runner-boss{display:grid;gap:12px;padding:20px;border-radius:22px;background:#dff3e8;text-align:center}
+.boss-arena{display:grid;gap:6px;justify-items:center}
+.boss-cat{font-size:4rem;transition:transform .2s}
+.boss-cat.strike{transform:scale(1.25)}
+.boss-arena p{font-size:1.6rem;color:#e36b3d;letter-spacing:.2em}
+progress{width:100%;height:18px}
+@media(max-width:600px){
+  .runner-hero{display:grid}
+  .runner-actions{grid-template-columns:1fr 1fr}
+  .runner-actions .difficulty-control{grid-column:1/-1}
+  .runner-options{grid-template-columns:1fr}
+  .runner-track .lane{min-height:56px}
+}
