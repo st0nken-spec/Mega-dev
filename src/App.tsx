@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import './App.css'
 import './features/create/create.css'
-import { awardStar, loadProfiles, resetStars, type Profile } from './game'
+import { awardStar, loadProfiles, resetStars, type Difficulty, type Profile } from './game'
 import { ProfileBar } from './components/ProfileBar'
 import { Home } from './components/Home'
 import { HubPicker, type HubPickerItem } from './components/HubPicker'
@@ -41,6 +41,7 @@ export default function App(){
   const [profiles,setProfiles]=useState<Profile[]>(()=>loadProfiles(localStorage.getItem('mega-profiles')))
   const [activeId,setActiveId]=useState(profiles[0].id)
   const [screen,setScreen]=useState<Screen>({kind:'home'})
+  const [difficulty,setDifficulty]=useState<Difficulty>(1)
 
   const persist=(updated:Profile[])=>{setProfiles(updated);localStorage.setItem('mega-profiles',JSON.stringify(updated))}
   const award=()=>persist(awardStar(profiles,activeId))
@@ -61,7 +62,7 @@ export default function App(){
       content=<Home onSelect={goHub}/>
     }
   } else if(screen.hub==='play'){
-    const game=screen.activity==='matching'?<MatchingGame onMatch={award}/>:screen.activity==='tictactoe'?<TicTacToe onWin={award}/>:<SnakeGame/>
+    const game=screen.activity==='matching'?<MatchingGame difficulty={difficulty} onDifficultyChange={setDifficulty} onMatch={award}/>:screen.activity==='tictactoe'?<TicTacToe difficulty={difficulty} onDifficultyChange={setDifficulty} onWin={award}/>:<SnakeGame key={difficulty} difficulty={difficulty} onDifficultyChange={setDifficulty}/>
     content=<ActivityFrame backLabel="Spela" breadcrumb={playNames[screen.activity]} onBack={()=>goHub('play')}>{game}</ActivityFrame>
   } else if(screen.hub==='create'){
     const studio=screen.activity==='color'?<ColoringStudio/>:<DrawingStudio trace={screen.activity==='trace'}/>
