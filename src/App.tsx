@@ -12,6 +12,7 @@ import { DrawingStudio } from './features/create/DrawingStudio'
 import { MatchingGame } from './features/matching/MatchingGame'
 import { TicTacToe } from './features/play/TicTacToe'
 import { SnakeGame } from './features/play/SnakeGame'
+import { HomeworkHub } from './features/homework/HomeworkHub'
 
 export type Hub = 'play' | 'create' | 'homework'
 type PlayActivity = 'matching' | 'tictactoe' | 'snake'
@@ -21,6 +22,7 @@ type Screen =
   | { kind: 'hub'; hub: Hub }
   | { kind: 'activity'; hub: 'play'; activity: PlayActivity }
   | { kind: 'activity'; hub: 'create'; activity: CreateActivity }
+  | { kind: 'activity'; hub: 'homework' }
 
 const playItems: HubPickerItem[] = [
   { id: 'matching', icon: 'P', name: 'Parjakten', description: 'Matcha par i fyra ämnen' },
@@ -45,7 +47,7 @@ export default function App(){
   const reset=(id:string)=>persist(resetStars(profiles,id))
 
   const goHome=()=>setScreen({kind:'home'})
-  const goHub=(hub:Hub)=>setScreen({kind:'hub',hub})
+  const goHub=(hub:Hub)=>hub==='homework'?setScreen({kind:'activity',hub:'homework'}):setScreen({kind:'hub',hub})
 
   let content:ReactNode
   if(screen.kind==='home'){
@@ -61,9 +63,11 @@ export default function App(){
   } else if(screen.hub==='play'){
     const game=screen.activity==='matching'?<MatchingGame onMatch={award}/>:screen.activity==='tictactoe'?<TicTacToe onWin={award}/>:<SnakeGame/>
     content=<ActivityFrame backLabel="Spela" breadcrumb={playNames[screen.activity]} onBack={()=>goHub('play')}>{game}</ActivityFrame>
-  } else {
+  } else if(screen.hub==='create'){
     const studio=screen.activity==='color'?<ColoringStudio/>:<DrawingStudio trace={screen.activity==='trace'}/>
     content=<ActivityFrame backLabel="Skapa" breadcrumb={createNames[screen.activity]} onBack={()=>goHub('create')}>{studio}</ActivityFrame>
+  } else {
+    content=<ActivityFrame backLabel="Hem" breadcrumb="Läxa" onBack={goHome}><HomeworkHub/></ActivityFrame>
   }
 
   return <main>
