@@ -11,7 +11,7 @@ export default function App(){
   const [open,setOpen]=useState<string[]>([])
   const track=getTrack(trackId)
   const [message,setMessage]=useState(track.instruction)
-  const start=(nextTrack:TrackId=trackId,nextDifficulty:Difficulty=difficulty)=>{const next=getTrack(nextTrack);setTrackId(nextTrack);setDifficulty(nextDifficulty);setDeck(makeDeck(nextTrack,nextDifficulty));setOpen([]);setMessage(next.instruction)}
+  const start=(nextTrack:TrackId=trackId,nextDifficulty:Difficulty=difficulty)=>{const next=getTrack(nextTrack);const samePack=nextTrack===trackId&&nextDifficulty===difficulty;const currentPairs=samePack?[...new Set(deck.map(card=>card.pairId))]:[];setTrackId(nextTrack);setDifficulty(nextDifficulty);setDeck(makeDeck(nextTrack,nextDifficulty,Math.random,currentPairs));setOpen([]);setMessage(next.instruction)}
   const choose=(id:string)=>{
     if(open.length===2)return
     const card=deck.find(c=>c.id===id);if(!card||card.matched||open.includes(id))return
