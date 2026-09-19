@@ -49,3 +49,15 @@ test('blocks the gate keeper in pure-fun mode and awards a star', async ({ page 
   await expect(done).toContainText('Porten är öppen')
   await expect(page.getByText('Räven · 1 stjärnor')).toBeVisible()
 })
+
+test('runs the training course and chase with the keyboard', async ({ page }) => {
+  await openGame(page)
+  const course = page.getByRole('region', { name: 'Träningsbanan' })
+  for (let i = 0; i < 5; i++) {
+    const prompt = await course.locator('.runner-prompt').innerText()
+    await page.keyboard.press(/hoppa/i.test(prompt) ? ' ' : 'ArrowDown')
+  }
+  await expect(page.getByLabel('Löparled')).toBeVisible()
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByRole('button', { name: 'Spår 3' })).toHaveAttribute('aria-pressed', 'true')
+})

@@ -55,3 +55,16 @@ describe('gate keeper boss', () => {
     expect(state.progress).toBe(PROGRESS_TO_WIN)
   })
 })
+
+describe('createGate telegraph window', () => {
+  it('uses a custom telegraph window for gentler levels', () => {
+    expect(createGate(4).ticksLeft).toBe(4)
+  })
+
+  it('restores the custom window after a miss', () => {
+    const ready = { ...createGate(4), ticksLeft: 1 }
+    const { state, outcome } = tickGate(ready, false, true)
+    expect(outcome).toBe('missed')
+    expect(state.ticksLeft).toBe(4)
+  })
+})

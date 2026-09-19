@@ -8,8 +8,9 @@ import { attackHint, jungleStages, tutorialSteps } from './jungleRunContent'
 import './runner.css'
 
 const stageLength = (difficulty: Difficulty) => difficulty === 1 ? 12 : 16
-const chaseTick = (difficulty: Difficulty) => difficulty === 1 ? TICK_MS + 160 : TICK_MS
+const chaseTick = (difficulty: Difficulty) => difficulty === 1 ? TICK_MS + 160 : TICK_MS + 40
 const BOSS_TICK_MS = 900
+const telegraphTicks = (difficulty: Difficulty) => difficulty === 1 ? 4 : 3
 const WIN_MESSAGE = 'Djungeln är trygg! Du klarade hela äventyret.'
 
 export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficulty: Difficulty; onDifficultyChange: (value: Difficulty) => void; onWin: () => void }) {
@@ -19,7 +20,7 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
   const [step, setStep] = useState(0)
   const [question, setQuestion] = useState<Question>(() => makeQuestion('math', difficulty))
   const [run, setRun] = useState<RunState>(createRun)
-  const [boss, setBoss] = useState<GuardianState>(createGuardian)
+  const [boss, setBoss] = useState<GuardianState>(() => createGuardian(Math.random, telegraphTicks(difficulty)))
   const [bossLane, setBossLane] = useState<Lane>(1)
   const [bossAction, setBossAction] = useState<Action>('run')
   const [won, setWon] = useState(false)
@@ -36,7 +37,7 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
     setStep(0)
     setQuestion(makeQuestion(nextTrack, nextDifficulty))
     setRun(createRun())
-    setBoss(createGuardian())
+    setBoss(createGuardian(Math.random, telegraphTicks(nextDifficulty)))
     setBossLane(1)
     setBossAction('run')
     setWon(false)
@@ -49,7 +50,7 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
     setStage(next)
     setStep(0)
     setRun(createRun())
-    setBoss(createGuardian())
+    setBoss(createGuardian(Math.random, telegraphTicks(difficulty)))
     setBossLane(1)
     setBossAction('run')
     setMessage(jungleStages[next].description)
@@ -87,6 +88,27 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
       }
     }, BOSS_TICK_MS)
     return () => clearInterval(timer)
+  })
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (won) return
+      if (stage === 0) {
+        if (event.key === ' ' || event.key === 'ArrowUp') { event.preventDefault(); tutorialMove('jump') }
+        if (event.key === 'ArrowDown') { event.preventDefault(); tutorialMove('duck') }
+      } else if (stage === 1) {
+        if (event.key === 'ArrowLeft') { event.preventDefault(); move(run.lane > 0 ? (run.lane - 1) as Lane : 0) }
+        if (event.key === 'ArrowRight') { event.preventDefault(); move(run.lane < 2 ? (run.lane + 1) as Lane : 2) }
+        if (event.key === ' ' || event.key === 'ArrowUp') { event.preventDefault(); move(undefined, 'jump') }
+        if (event.key === 'ArrowDown') { event.preventDefault(); move(undefined, 'duck') }
+      } else if (stage === 2) {
+        if (event.key === 'ArrowLeft') { event.preventDefault(); setBossLane(current => current > 0 ? (current - 1) as Lane : 0) }
+        if (event.key === 'ArrowRight') { event.preventDefault(); setBossLane(current => current < 2 ? (current + 1) as Lane : 2) }
+        if (event.key === ' ' || event.key === 'ArrowDown') { event.preventDefault(); setBossAction('duck') }
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   })
 
   const tutorialMove = (kind: 'jump' | 'duck' | 'lane') => {

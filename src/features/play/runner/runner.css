@@ -35,3 +35,5 @@ progress{width:100%;height:18px}
 }
 .block-button{grid-column:1/-1;font-size:1.3rem;padding:20px}
 .block-button[aria-pressed=true]{background:#174f42;color:#fff}
+
+@media (prefers-reduced-motion: reduce){.runner-stage{scroll-behavior:auto}.boss-cat{transition:none}}
