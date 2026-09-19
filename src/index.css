@@ -1,1 +1,5 @@
 button{cursor:pointer}button:focus-visible{outline:4px solid #5c8cff;outline-offset:3px}
+.skip-link{position:fixed;left:12px;top:12px;z-index:10;padding:10px 14px;border-radius:10px;background:#17322b;color:#fff;font-weight:800;transform:translateY(-160%)}.skip-link:focus{transform:translateY(0)}
+button,.back-link,.skip-link{touch-action:manipulation}button:not(.swatch){min-height:44px}.swatch{min-width:44px;min-height:44px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media(forced-colors:active){button,[aria-pressed="true"]{border:2px solid ButtonText}.card.shown{outline:3px solid CanvasText}.private{border:1px solid CanvasText}}
