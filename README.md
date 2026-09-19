@@ -1,32 +1,24 @@
-# React + TypeScript + Vite
+# Mega-dev
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Private, Swedish-first family learning hub for young children. The app includes separate child profiles, Play, Create and Homework hubs, and works as an installable PWA.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Quality gate
+
+```sh
+make check
+make build
+pnpm exec playwright test
+```
+
+`make check` runs TypeScript, lint and unit tests. Playwright covers the child journeys at a phone viewport. The production build registers the service worker; development does not.
+
+## Data and privacy
+
+Profile progress stays in this browser's local storage. There is no account, analytics, advertising, or server-side child data in the current app. Use the reset control next to a profile to clear its stars.

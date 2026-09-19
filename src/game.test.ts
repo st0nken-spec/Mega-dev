@@ -11,3 +11,13 @@ describe('learning game domain',()=>{
   it('falls back from missing, empty or corrupt storage',()=>{expect(loadProfiles(null)).toEqual(initialProfiles);expect(loadProfiles('[]')).toEqual(initialProfiles);expect(loadProfiles('{oops')).toEqual(initialProfiles)})
   it('falls back to math for an unknown runtime track',()=>{expect(getTrack('nope' as never).id).toBe('math')})
 })
+
+describe('profile storage hardening',()=>{
+  it('falls back when stored profiles have the wrong shape',()=>{
+    expect(loadProfiles('[{"name":"Räven"}]')).toEqual(initialProfiles)
+    expect(loadProfiles('[null]')).toEqual(initialProfiles)
+  })
+  it('falls back for invalid progress values',()=>{
+    expect(loadProfiles('[{"id":"x","name":"Räven","level":1,"stars":-2}]')).toEqual(initialProfiles)
+  })
+})

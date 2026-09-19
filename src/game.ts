@@ -36,9 +36,17 @@ export const makeDeck = (trackId:TrackId='math',difficulty:Difficulty=1,random:(
   const selected=[...candidates].sort(()=>random()-.5).slice(0,3)
   return selected.flatMap(pair=>pair.labels.map((label,index)=>({id:`${pair.id}-${index}`,pairId:pair.id,label,matched:false}))).sort(()=>random()-.5)
 }
+const isProfile = (value: unknown): value is Profile => {
+  if (!value || typeof value !== 'object') return false
+  const profile = value as Partial<Profile>
+  return typeof profile.id === 'string' && profile.id.length > 0
+    && typeof profile.name === 'string' && profile.name.length > 0
+    && typeof profile.level === 'number' && Number.isFinite(profile.level)
+    && typeof profile.stars === 'number' && Number.isFinite(profile.stars) && profile.stars >= 0
+}
 export const loadProfiles = (stored:string|null): Profile[] => {
   if(!stored) return initialProfiles
-  try { const value:unknown=JSON.parse(stored); return Array.isArray(value)&&value.length>0?value as Profile[]:initialProfiles } catch { return initialProfiles }
+  try { const value:unknown=JSON.parse(stored); return Array.isArray(value)&&value.length>0&&value.every(isProfile)?value:initialProfiles } catch { return initialProfiles }
 }
 export const matchCards = (deck:Card[],ids:string[]) => {
   if(ids.length!==2) return {matched:false,deck}
