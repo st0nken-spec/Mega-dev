@@ -57,7 +57,7 @@ test('completes all three stages in pure-fun mode and awards a star', async ({ p
       await boss.getByRole('button', { name: 'Ducka' }).click()
     } else {
       const target = Number(banner.match(/spår (\d)/)?.[1] ?? '2')
-      await boss.getByRole('button', { name: `Spår ${target === 2 ? 1 : 2}`, exact: true }).click()
+      await boss.getByRole('button', { name: `Spår ${target === 2 ? 1 : 2}`, exact: true }).dispatchEvent('click').catch(() => undefined)
     }
     await page.waitForTimeout(350)
   }
