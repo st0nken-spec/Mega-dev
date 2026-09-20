@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { getTrack, tracks, type Difficulty, type TrackId } from '../../game'
 import { DifficultyControl } from '../../components/DifficultyControl'
+import { TrackPicker } from '../../components/TrackPicker'
 import { checkWinner, emptyBoard, isBoardFull, makeQuestion, type Board, type Line, type Mark, type Question } from './ticTacToe'
 
 type Pending = { cellIndex: number; question: Question }
@@ -43,7 +44,7 @@ export function TicTacToe({difficulty,onDifficultyChange,onWin}:{difficulty:Diff
   }
 
   return <>
-    <section className="track-picker" aria-label="Välj ämne">{tracks.map(item=><button aria-pressed={item.id===trackId} className={item.id===trackId?'track active':'track'} onClick={()=>start(item.id,difficulty)} key={item.id}><span>{item.shortName}</span><b>{item.name}</b></button>)}</section>
+    <TrackPicker items={tracks} activeId={trackId} onSelect={id=>start(id,difficulty)}/>
     <section className="hero"><div><p className="eyebrow">{track.name.toUpperCase()} · NIVÅ {difficulty}</p><h2>Tre i rad</h2><p aria-live="polite">{message}</p></div><div className="actions"><DifficultyControl value={difficulty} onChange={level=>start(trackId,level)}/><button className="reset" onClick={()=>start()}>Blanda om</button></div></section>
     {pending&&<section className="question" aria-label="Fråga"><p>{pending.question.prompt}</p><div className="answers">{pending.question.options.map((option,i)=><button data-testid={`answer-${i}`} className="answer" onClick={()=>answer(option)} key={`option-${i}`}>{option}</button>)}</div></section>}
     <section className="game" aria-label="Tre i rad">{board.map((cell,i)=><button data-testid={`cell-${i}`} aria-label={cell?`Ruta ${i+1}: ${cell}`:`Ruta ${i+1}, tom`} disabled={cell!==null||pending!==null||status!=='playing'} onClick={()=>chooseCell(i)} className={winningLine?.includes(i)?'card shown winning':'card shown'} key={i}>{cell??''}</button>)}</section>
