@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getTrack, tracks, type Difficulty, type TrackId } from '../../../game'
 import { DifficultyControl } from '../../../components/DifficultyControl'
+import { TrackPicker } from '../../../components/TrackPicker'
 import { makeQuestion, type Question } from '../ticTacToe'
 import { advance, createRun, TICK_MS, VIEW_DISTANCE, type Lane, type Obstacle, type RunState } from './runnerEngine'
 import { advanceGate, BLOCKS_PER_QUESTION, createGate, failGate, PROGRESS_TO_WIN, tickGate, type GateState } from './gateKeeper'
@@ -129,7 +130,7 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
   const banner = run.obstacles.filter(item => item.kind === 'question' && visible(item)).sort((a, b) => a.distance - b.distance)[0]
 
   return <section className="runner-panel" aria-label="Hjältebanan">
-    <section className="track-picker" aria-label="Välj ämne">{tracks.map(item => <button aria-pressed={item.id === trackId} className={item.id === trackId ? 'track active' : 'track'} onClick={() => restart(item.id, difficulty)} key={item.id}><span>{item.shortName}</span><b>{item.name}</b></button>)}</section>
+    <TrackPicker items={tracks} activeId={trackId} onSelect={id => restart(id, difficulty)} />
     <section className="runner-hero">
       <div>
         <p className="eyebrow">{track.name.toUpperCase()} · NIVÅ {difficulty}</p>
