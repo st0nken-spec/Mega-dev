@@ -5,6 +5,7 @@ import { makeQuestion, type Question } from '../ticTacToe'
 import { advance, createRun, TICK_MS, VIEW_DISTANCE, type Action, type Lane, type Obstacle, type RunState } from './runnerEngine'
 import { createGuardian, HITS_TO_WIN, landHit, missShield, tickGuardian, type GuardianState } from './guardian'
 import { attackHint, jungleStages, tutorialSteps } from './jungleRunContent'
+import { TutorialActionButton, TutorialProgressDots } from './runnerTutorialControls'
 import './runner.css'
 
 const stageLength = (difficulty: Difficulty) => difficulty === 1 ? 12 : 16
@@ -94,8 +95,8 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
     const onKey = (event: KeyboardEvent) => {
       if (won) return
       if (stage === 0) {
-        if (event.key === ' ' || event.key === 'ArrowUp') { event.preventDefault(); tutorialMove('jump') }
-        if (event.key === 'ArrowDown') { event.preventDefault(); tutorialMove('duck') }
+        const kind = steps[step]?.kind
+        if ((kind === 'jump' || kind === 'duck') && (event.key === ' ' || event.key === 'ArrowUp' || event.key === 'ArrowDown')) { event.preventDefault(); tutorialMove(kind) }
       } else if (stage === 1) {
         if (event.key === 'ArrowLeft') { event.preventDefault(); move(run.lane > 0 ? (run.lane - 1) as Lane : 0) }
         if (event.key === 'ArrowRight') { event.preventDefault(); move(run.lane < 2 ? (run.lane + 1) as Lane : 2) }
@@ -163,7 +164,7 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
 
     {stage === 0 && !won && <section className="runner-question" aria-label="Trädkronorna">
       <p className="runner-prompt">{steps[step]?.prompt}</p>
-      <p className="runner-progress-dots" aria-label={`Frö ${step} av ${steps.length}`}>{steps.map((_, index) => index < step ? '●' : '○').join(' ')}</p>
+      <TutorialProgressDots total={steps.length} done={step} label={`Frö ${step} av ${steps.length}`} />
       {steps[step]?.kind === 'question'
         ? <>
             <p className="runner-quiz">{question.prompt}</p>
@@ -171,9 +172,7 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
           </>
         : steps[step]?.kind === 'lane'
           ? <div className="runner-options" aria-label="Välj spår">{([0, 1, 2] as Lane[]).map(lane => <button key={lane} onClick={() => tutorialMove('lane')}>Spår {lane + 1}</button>)}</div>
-          : <div className="runner-controls">
-              <button className="block-button" onClick={() => tutorialMove(steps[step]?.kind === 'duck' ? 'duck' : 'jump')}>{steps[step]?.kind === 'duck' ? 'Ducka' : 'Hoppa'}</button>
-            </div>}
+          : <TutorialActionButton kind={steps[step]?.kind === 'duck' ? 'duck' : 'jump'} onMove={tutorialMove} />}
     </section>}
 
     {stage === 1 && !won && <>
