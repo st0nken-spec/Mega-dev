@@ -163,17 +163,17 @@ export function JungleRun({ difficulty, onDifficultyChange, onWin }: { difficult
 
     {stage === 0 && !won && <section className="runner-question" aria-label="Trädkronorna">
       <p className="runner-prompt">{steps[step]?.prompt}</p>
-      <p aria-label={`Frö ${step} av ${steps.length}`}>{'● '.repeat(step).trim() || '·'}</p>
+      <p className="runner-progress-dots" aria-label={`Frö ${step} av ${steps.length}`}>{steps.map((_, index) => index < step ? '●' : '○').join(' ')}</p>
       {steps[step]?.kind === 'question'
         ? <>
             <p className="runner-quiz">{question.prompt}</p>
             <div className="runner-options">{question.options.map(option => <button key={option} onClick={() => answerTutorial(option)}>{option}</button>)}</div>
           </>
-        : <div className="runner-controls">
-            <button onClick={() => tutorialMove('jump')}>Hoppa</button>
-            <button onClick={() => tutorialMove('duck')}>Ducka</button>
-            {([0, 1, 2] as Lane[]).map(lane => <button key={lane} onClick={() => tutorialMove('lane')}>Spår {lane + 1}</button>)}
-          </div>}
+        : steps[step]?.kind === 'lane'
+          ? <div className="runner-options" aria-label="Välj spår">{([0, 1, 2] as Lane[]).map(lane => <button key={lane} onClick={() => tutorialMove('lane')}>Spår {lane + 1}</button>)}</div>
+          : <div className="runner-controls">
+              <button className="block-button" onClick={() => tutorialMove(steps[step]?.kind === 'duck' ? 'duck' : 'jump')}>{steps[step]?.kind === 'duck' ? 'Ducka' : 'Hoppa'}</button>
+            </div>}
     </section>}
 
     {stage === 1 && !won && <>

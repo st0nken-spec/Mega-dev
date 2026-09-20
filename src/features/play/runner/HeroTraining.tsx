@@ -146,10 +146,9 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
 
     {stage === 0 && !won && <section className="runner-question" aria-label="Träningsbanan">
       <p className="runner-prompt">{courseSteps[step]?.prompt}</p>
-      <p aria-label={`Hinder ${step} av ${courseSteps.length}`}>{'● '.repeat(step).trim() || '·'}</p>
+      <p className="runner-progress-dots" aria-label={`Hinder ${step} av ${courseSteps.length}`}>{courseSteps.map((_, index) => index < step ? '●' : '○').join(' ')}</p>
       <div className="runner-controls">
-        <button onClick={() => courseMove('jump')}>Hoppa</button>
-        <button onClick={() => courseMove('duck')}>Ducka</button>
+        <button className="block-button" onClick={() => courseMove(courseSteps[step]?.kind === 'duck' ? 'duck' : 'jump')}>{courseSteps[step]?.kind === 'duck' ? 'Ducka' : 'Hoppa'}</button>
       </div>
     </section>}
 

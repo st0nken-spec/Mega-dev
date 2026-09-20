@@ -18,6 +18,7 @@
 .runner-controls button[aria-pressed=true]{background:#174f42;color:#fff}
 .runner-question{display:grid;gap:12px;padding:20px;border-radius:22px;background:#dff3e8;text-align:center}
 .runner-question p{font-size:1.2rem;font-weight:900}
+.runner-progress-dots{font-size:1.4rem;letter-spacing:.35em;color:#174f42}
 .runner-quiz{font-size:1.6rem}
 .runner-options{grid-template-columns:repeat(3,1fr)}
 .runner-boss{display:grid;gap:12px;padding:20px;border-radius:22px;background:#dff3e8;text-align:center}
