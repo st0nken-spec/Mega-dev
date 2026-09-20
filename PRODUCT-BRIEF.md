@@ -27,9 +27,9 @@ Learning tracks: early math, Swedish, English and general knowledge. Educational
 - trace-the-contour activities for shapes, letters and numbers;
 - save or export a child's work under parent control.
 
-### Homework hub - later
+### Homework hub
 
-Generate printable or on-screen practice from parent-chosen skill, language and level. Keep generation parent-reviewed before a child sees or prints it. Do not send children's names, drawings or performance history to an external model by default.
+First version shipped: parent-configured practice sheets in the hub. Generate printable or on-screen practice from parent-chosen skill, language and level. Keep generation parent-reviewed before a child sees or prints it. Do not send children's names, drawings or performance history to an external model by default.
 
 ## First vertical slice
 
