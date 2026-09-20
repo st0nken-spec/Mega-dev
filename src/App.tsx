@@ -15,6 +15,7 @@ import { SnakeGame } from './features/play/SnakeGame'
 import { HomeworkHub } from './features/homework/HomeworkHub'
 import { JungleRun } from './features/play/runner/JungleRun'
 import { HeroTraining } from './features/play/runner/HeroTraining'
+import { appBuildId } from './buildInfo'
 
 export type Hub = 'play' | 'create' | 'homework'
 type PlayActivity = 'matching' | 'tictactoe' | 'snake' | 'jungleRun' | 'heroTraining'
@@ -76,7 +77,7 @@ export default function App(){
   }
 
   return <><a className="skip-link" href="#main-content">Hoppa till innehållet</a><main id="main-content" tabIndex={-1}>
-    <header><div><p className="eyebrow">MEGA-DEV</p><h1>Familjens lärhub</h1></div><span className="private">● Privat hemma</span></header>
+    <header><div><p className="eyebrow">MEGA-DEV</p><h1>Familjens lärhub</h1></div><div className="header-status"><span className="private">● Privat hemma</span><span className="build-stamp" aria-label={`Version ${appBuildId}`}>v {appBuildId}</span></div></header>
     <ProfileBar profiles={profiles} activeId={activeId} onSelect={setActiveId} onReset={reset}/>
     {content}
   </main></>
