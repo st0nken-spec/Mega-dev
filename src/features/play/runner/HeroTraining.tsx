@@ -5,6 +5,7 @@ import { makeQuestion, type Question } from '../ticTacToe'
 import { advance, createRun, TICK_MS, VIEW_DISTANCE, type Lane, type Obstacle, type RunState } from './runnerEngine'
 import { advanceGate, BLOCKS_PER_QUESTION, createGate, failGate, PROGRESS_TO_WIN, tickGate, type GateState } from './gateKeeper'
 import { courseSteps, gateHint, heroStages } from './heroTrainingContent'
+import { TutorialActionButton, TutorialProgressDots } from './runnerTutorialControls'
 import './runner.css'
 
 const stageLength = (difficulty: Difficulty) => difficulty === 1 ? 14 : 18
@@ -88,8 +89,7 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
     const onKey = (event: KeyboardEvent) => {
       if (won) return
       if (stage === 0) {
-        if (event.key === ' ' || event.key === 'ArrowUp') { event.preventDefault(); courseMove('jump') }
-        if (event.key === 'ArrowDown') { event.preventDefault(); courseMove('duck') }
+        if (event.key === ' ' || event.key === 'ArrowUp' || event.key === 'ArrowDown') { event.preventDefault(); courseMove(courseSteps[step]?.kind === 'duck' ? 'duck' : 'jump') }
       } else if (stage === 1) {
         if (event.key === 'ArrowLeft') { event.preventDefault(); move(run.lane > 0 ? (run.lane - 1) as Lane : 0) }
         if (event.key === 'ArrowRight') { event.preventDefault(); move(run.lane < 2 ? (run.lane + 1) as Lane : 2) }
@@ -146,11 +146,8 @@ export function HeroTraining({ difficulty, onDifficultyChange, onWin }: { diffic
 
     {stage === 0 && !won && <section className="runner-question" aria-label="Träningsbanan">
       <p className="runner-prompt">{courseSteps[step]?.prompt}</p>
-      <p aria-label={`Hinder ${step} av ${courseSteps.length}`}>{'● '.repeat(step).trim() || '·'}</p>
-      <div className="runner-controls">
-        <button onClick={() => courseMove('jump')}>Hoppa</button>
-        <button onClick={() => courseMove('duck')}>Ducka</button>
-      </div>
+      <TutorialProgressDots total={courseSteps.length} done={step} label={`Hinder ${step} av ${courseSteps.length}`} />
+      <TutorialActionButton kind={courseSteps[step]?.kind === 'duck' ? 'duck' : 'jump'} onMove={courseMove} />
     </section>}
 
     {stage === 1 && !won && <>
